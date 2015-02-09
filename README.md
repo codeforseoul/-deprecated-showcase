@@ -13,3 +13,18 @@ Check demo app <a href="https://rails4-crud-with-angularjs.herokuapp.com">here</
 
 <h3>License</h3>
 <p>This is released under the MIT license.</p>
+
+
+```
+brew install pg mariadb
+
+mysql.server start
+
+git clone codeforseoul/showcase # if using hub
+
+bundle exec rake db:setup
+
+rails s
+
+open http:localhost:3000
+```
