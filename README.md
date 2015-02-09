@@ -3,7 +3,7 @@
 Check demo app <a href="https://rails4-crud-with-angularjs.herokuapp.com">here</a>.
 
 1. CRUD example using Rails4 + AngularJS
- 
+
    <p>In this app I given example of how to create CRUD operation using Rails4 with AngularJS.</p>
 
 2. Create nested form using AngularJS
@@ -15,12 +15,16 @@ Check demo app <a href="https://rails4-crud-with-angularjs.herokuapp.com">here</
 <p>This is released under the MIT license.</p>
 
 
-```
-brew install pg mariadb
+```bash
+brew install postgresql mariadb
+# check out here (https://mariadb.com/kb/en/getting-installing-and-upgrading-mariadb/) to install MariaDB
 
 mysql.server start
 
 git clone codeforseoul/showcase # if using hub
+
+bundle install
+# if you have an error while install 'pg', then check out this answers on stackoverflow: http://stackoverflow.com/questions/25629953/bundle-failing-cant-find-the-postgresql-client-library-libpq
 
 bundle exec rake db:setup
 

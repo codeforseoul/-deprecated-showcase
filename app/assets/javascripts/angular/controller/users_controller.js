@@ -1,11 +1,11 @@
-var myApp = angular.module('myapplication', ['ngRoute', 'ngResource']); 
+var myApp = angular.module('myapplication', ['ngRoute', 'ngResource']);
 
 //Factory
 myApp.factory('Users', ['$resource',function($resource){
   return $resource('/users.json', {},{
     query: { method: 'GET', isArray: true },
     create: { method: 'POST' }
-  })
+  });
 }]);
 
 myApp.factory('User', ['$resource', function($resource){
@@ -32,20 +32,20 @@ myApp.controller("UserListCtr", ['$scope', '$http', '$resource', 'Users', 'User'
 }]);
 
 myApp.controller("UserUpdateCtr", ['$scope', '$resource', 'User', '$location', '$routeParams', function($scope, $resource, User, $location, $routeParams) {
-  $scope.user = User.get({id: $routeParams.id})
+  $scope.user = User.get({id: $routeParams.id});
   $scope.update = function(){
     if ($scope.userForm.$valid){
       User.update({id: $scope.user.id},{user: $scope.user},function(){
         $location.path('/');
       }, function(error) {
-        console.log(error)
+        console.log(error);
       });
     }
   };
-  
+
   $scope.addAddress = function(){
-    $scope.user.addresses.push({street1: '', street2: '', city: '', state: '', country: '', zipcode: '' })
-  }
+    $scope.user.addresses.push({street1: '', street2: '', city: '', state: '', country: '', zipcode: '' });
+  };
 
   $scope.removeAddress = function(index, user){
     var address = user.addresses[index];
@@ -59,20 +59,20 @@ myApp.controller("UserUpdateCtr", ['$scope', '$resource', 'User', '$location', '
 }]);
 
 myApp.controller("UserAddCtr", ['$scope', '$resource', 'Users', '$location', function($scope, $resource, Users, $location) {
-  $scope.user = {addresses: [{street1: '', street2: '', city: '', state: '', country: '', zipcode: '' }]}
+  $scope.user = {addresses: [{street1: '', street2: '', city: '', state: '', country: '', zipcode: '' }]};
   $scope.save = function () {
     if ($scope.userForm.$valid){
       Users.create({user: $scope.user}, function(){
         $location.path('/');
       }, function(error){
-        console.log(error)
+        console.log(error);
       });
     }
-  }
+  };
 
   $scope.addAddress = function(){
-    $scope.user.addresses.push({street1: '', street2: '', city: '', state: '', country: '', zipcode: '' })
-  }
+    $scope.user.addresses.push({street1: '', street2: '', city: '', state: '', country: '', zipcode: '' });
+  };
 
   $scope.removeAddress = function(index, user){
     var address = user.addresses[index];
@@ -107,4 +107,3 @@ myApp.config([
     });
   }
 ]);
-
