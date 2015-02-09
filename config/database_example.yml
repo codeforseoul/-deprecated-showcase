@@ -8,7 +8,7 @@ default: &default
   adapter: mysql2
   encoding: utf8
   username: root
-  password: tmdgns0459
+  password: 'password'
   host: 127.0.0.1
   pool: 5
   timeout: 5000

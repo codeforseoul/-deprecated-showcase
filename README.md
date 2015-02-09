@@ -26,7 +26,7 @@ git clone codeforseoul/showcase # if using hub
 bundle install
 # if you have an error while install 'pg', then check out this answers on stackoverflow: http://stackoverflow.com/questions/25629953/bundle-failing-cant-find-the-postgresql-client-library-libpq
 
-# add your mysql password on /config/database.yml before db:setup
+# copy or move database_example.yml to database.yml & add your mysql password before rake db:setup
 
 bundle exec rake db:setup
 
