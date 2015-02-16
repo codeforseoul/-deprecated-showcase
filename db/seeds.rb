@@ -3,18 +3,5 @@
 #
 # Examples:
 #
-  addresses = Address.create([
-  	{ 
-  		street1: 'street1',
-		street2: 'street2',
-		city: 'city',
-		state: 'state',
-		country: 'country',
-		zipcode: 'zipcode',
-		user_id: 1,
-		created_at: '',
-		updated_at: '',
-  	},
-  ])
-
-  User.create(id: '', first_name: 'dev', last_name: 'mozo', email: 'mozo@localhost', phone: '9876543210')
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Emanuel', city: cities.first)
