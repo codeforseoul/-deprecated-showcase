@@ -1,23 +1,21 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<header class="col-md-12 featured-projects">
+  <div class="col-md-3">thumbnail image of featured project</div>
+  <div class="col-md-9">description of featured project</div>
+</header>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
+<section class="col-md-9 projects">
+  <h2 class="page-header">Projects</h2>
+  <li class="row project" ng-repeat="project in projects">
+    <section class="col-md-9 description">
+      <h3><a ui-sref="project({id: {{ project.id }} })">{{ project.title }}</a></h3>
+      <p>{{ project.description }}</p>
+      <p><a href="" class="category" ng-repeat="category in project.categories">{{category}}</a></p>
+    </section>
+    <section class="col-md-3 contributors">
+      <li class="contributor" ng-repeat="contributor in project.contributors">
+        <a ui-sref="profile({id: {{contributor.id}} })"><img class="thumbnail" src="{{ contributor.image }}" alt=""></a>
+      </li>
+    </section>
+  </li>
+</section>
+<aside class="col-md-3" ng-include=" 'views/components/sidebar.main.html'"></aside>

@@ -14,18 +14,27 @@ body {
   padding: 0;
 }
 
+a {
+  cursor: pointer;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
+header,
+nav,
+footer {
   padding-left: 15px;
   padding-right: 15px;
 }
 
 /* Custom page header */
-.header {
+nav {
   border-bottom: 1px solid #e5e5e5;
   margin-bottom: 10px;
+
+  .navbar {
+    margin-bottom: 0px;
+    border: none;
+  }
 
   /* Make the masthead heading the same height as the navigation */
   h3 {
@@ -36,35 +45,44 @@ body {
   }
 }
 
+header.featured-projects {
+  min-height: 300px;
+}
+
+.projects {
+  .project {
+    .contributors {
+      padding-top: 20px;
+      padding-bottom: 10px;
+
+      .contributor {
+        list-style: none;
+        float: left;
+        margin-left: 5px;
+
+        img {
+          width: 50px;
+        }
+      }
+    }
+
+    .category {
+      margin-left: 10px;
+    }
+  }
+}
+
 /* Custom page footer */
-.footer {
+footer {
+  text-align: center;
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+  clear: both;
 }
 
 .container-narrow > hr {
   margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-
-  p + h4 {
-    margin-top: 28px;
-  }
 }
 
 /* Responsive: Portrait tablets and up */
@@ -74,18 +92,13 @@ body {
   }
 
   /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
+  header,
+  footer {
     padding-left: 0;
     padding-right: 0;
   }
   /* Space out the masthead */
-  .header {
+  header {
     margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
   }
 }
