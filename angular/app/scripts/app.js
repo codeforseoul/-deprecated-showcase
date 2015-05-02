@@ -16,11 +16,11 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.router'
+    'ui.router',
+    'ui.bootstrap'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
-
     $stateProvider
       .state('main', {
         url: '/',
@@ -31,5 +31,13 @@ angular
         url: '/about',
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .state('project', {
+        url: '/project/:id',
+        templateUrl: 'views/project.html',
+        controller: 'ProjectCtrl'
       });
-  });
+  })
+  .config(['$locationProvider', function ($locationProvider) {
+    // $locationProvider.html5Mode(true);
+  }]);

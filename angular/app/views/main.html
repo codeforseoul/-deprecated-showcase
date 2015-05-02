@@ -9,7 +9,7 @@
     <section class="col-md-9 description">
       <h3><a ui-sref="project({id: {{ project.id }} })">{{ project.title }}</a></h3>
       <p>{{ project.description }}</p>
-      <p><a href="" class="category" ng-repeat="category in project.categories">{{category}}</a></p>
+      <p><a href="" class="category" ng-repeat="category in project.categories | filter:'creator'">{{category}}</a></p>
     </section>
     <section class="col-md-3 contributors">
       <li class="contributor" ng-repeat="contributor in project.contributors">

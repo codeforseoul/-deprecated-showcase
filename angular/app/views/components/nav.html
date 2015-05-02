@@ -1,5 +1,5 @@
 <!-- Add your site or application content here -->
-<div class="navbar navbar-default" role="navigation">
+<div class="navbar navbar-default" role="navigation" ng-controller="NavCtrl">
   <div class="navbar-header">
 
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -9,15 +9,20 @@
       <span class="icon-bar"></span>
     </button>
 
-    <a class="navbar-brand" href="#/">showcase</a>
+    <a class="navbar-brand" ui-sref="main">showcase</a>
   </div>
 
   <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#/">Home</a></li>
-      <li><a ng-href="#/about">About</a></li>
-      <li><a ng-href="#/">Contact</a></li>
+      <li class="active"><a ui-sref="main">Home</a></li>
+      <li><a ui-sref="about">About</a></li>
+      <li><a ui-sref="/">Contact</a></li>
     </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <!-- Check if user signined using rootScope -->
+        <li><button class="btn btn-default" ng-click="openSigninForm()">Sign In</button></li>
+      </ul>
   </div>
 </div>
