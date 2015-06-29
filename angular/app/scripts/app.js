@@ -32,10 +32,25 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .state('signup', {
+        url: '/signup',
+        templateUrl: 'views/signup.html',
+        controller: 'SignupCtrl'
+      })
+      .state('newproject', {
+        url: '/project/new',
+        templateUrl: 'views/newProject.html',
+        controller: 'NewprojectCtrl'
+      })
       .state('project', {
         url: '/project/:id',
         templateUrl: 'views/project.html',
         controller: 'ProjectCtrl'
+      })
+      .state('projects', {
+        url: '/projects',
+        templateUrl: 'views/projects.html',
+        controller: 'ProjectsCtrl'
       });
   })
   .config(['$locationProvider', function ($locationProvider) {

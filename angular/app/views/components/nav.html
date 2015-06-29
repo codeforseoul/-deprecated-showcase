@@ -16,13 +16,14 @@
 
     <ul class="nav navbar-nav">
       <li class="active"><a ui-sref="main">Home</a></li>
-      <li><a ui-sref="about">About</a></li>
+      <li><a ui-sref="projects">프로젝트 찾아보기</a></li>
       <li><a ui-sref="/">Contact</a></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
         <!-- Check if user signined using rootScope -->
-        <li><button class="btn btn-default" ng-click="openSigninForm()">Sign In</button></li>
+        <li><a ui-sref="newproject">새 프로젝트</a></li>
+        <li><a ui-sref="signup">가입하기</a></li>
       </ul>
   </div>
 </div>

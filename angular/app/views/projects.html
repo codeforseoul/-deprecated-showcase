@@ -1,0 +1,35 @@
+<section class="ui page grid centered aligned">
+
+    <div class="ten wide column">
+      <div class="ui divided items">
+        <div class="item" ng-repeat="project in projects">
+          <div class="image">
+            <img src="/images/wireframe/image.png">
+          </div>
+          <div class="content">
+            <a ui-sref="project({id: '{{ project.id }}' })" class="header">{{ project.get('title') }}</a>
+            <div class="meta">
+              <span class="cinema"></span>
+            </div>
+            <div class="description">
+              <p>{{ project.get('desc') }}</p>
+            </div>
+            <div class="extra">
+              <div class="ui label" ng-repeat="tag in project.get('tags')">
+                {{ tag }}
+              </div>
+              <div class="ui right floated primary button">
+                참여하기
+                <i class="right chevron icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="four wide column">
+      hi
+    </div>
+
+</section>

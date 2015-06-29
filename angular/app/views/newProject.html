@@ -1,0 +1,35 @@
+<section class="container">
+  <div class="ui error form segment">
+    <div class="ui error message" style="display: none;">
+      <div class="header">Action Forbidden</div>
+      <p>You can only sign up for an account once with a given e-mail address.</p>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <label>프로젝트 이름</label>
+        <input placeholder="프로젝트 이름" type="text">
+      </div>
+      <div class="field">
+        <label>프로젝트 종류</label>
+        <select class="ui dropdown">
+          <option value="">Gender</option>
+          <option value="1">Male</option>
+          <option value="0">Female</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>프로젝트 설명</label>
+      <textarea placeholder="프로젝트 설명"></textarea>
+    </div>
+    <div class="field">
+      <label>프로젝트 주소</label>
+      <input type="text" placeholder="깃헙, 구글드라이브">
+    </div>
+    <div class="ui submit button">Submit</div>
+  </div>
+</section>
+
+<script>
+  $('select.dropdown').dropdown();
+</script>

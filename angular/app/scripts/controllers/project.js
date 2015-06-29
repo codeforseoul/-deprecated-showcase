@@ -8,7 +8,11 @@
  * Controller of the Project Page
  */
 angular.module('showcaseApp')
-  .controller('ProjectCtrl', function ($scope, $stateParams) {
-    $scope.id = $stateParams.id;
+  .controller('ProjectCtrl', function ($scope, $stateParams, parseSDK) {
+    $scope.project = {};
+    parseSDK.getById('Project', $stateParams.id)
+      .then(function (project) {
+        $scope.project = project;
+      })
 
   });

@@ -5,6 +5,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="bower_components/semantic-ui/dist/semantic.min.css">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -24,7 +25,7 @@
 
     <div ui-view=""></div>
 
-    <footer class="footer" ng-include=" 'views/components/footer.html'"></footer>
+    <div class="ui inverted black footer vertical segment" ng-include=" 'views/components/footer.html'"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -51,6 +52,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/semantic-ui/dist/semantic.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="vendor/ui-bootstrap-tpls-0.12.1.min.js"></script>
@@ -61,6 +63,9 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/project.js"></script>
+        <script src="scripts/controllers/newproject.js"></script>
+        <script src="scripts/controllers/signup.js"></script>
+        <script src="scripts/controllers/projects.js"></script>
         <!-- endbuild -->
 </body>
 </html>

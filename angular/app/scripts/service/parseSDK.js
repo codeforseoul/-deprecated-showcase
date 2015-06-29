@@ -14,7 +14,7 @@ angular
           var cb = callback || angular.noop;
           var deferred = $q.defer();
 
-          var classObject = Parse.Object.extend(className);
+          var classObject = className == 'User' ? Parse.User : Parse.Object.extend(className);
           var query = new Parse.Query(classObject);
 
           query.get(id, {
@@ -31,24 +31,22 @@ angular
           return deferred.promise;
         },
 
-        getAll: function (className, count, callback) {
-          var cb = callback || angular.noop;
+        getRows: function (className, count) {
+          var queryCount = count ? count : 0;
           var deferred = $q.defer();
 
           var classObject = className == 'User' ? Parse.User : Parse.Object.extend(className);
           var query = new Parse.Query(classObject);
 
           // set limit number of rows to get if you want
-          if (count > 0) query.limit(count);
+          if (count > 0) query.limit(queryCount);
 
           query.find({
             success: function (rows) {
               deferred.resolve(rows);
-              return cb();
             },
             error: function (rows, error) {
               deferred.reject(error);
-              return cb();
             }
           });
 
