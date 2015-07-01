@@ -1,12 +1,15 @@
-<section class="ui page grid centered aligned">
-
-    <div class="ten wide column">
-      <div class="ui divided items">
-        <div class="item" ng-repeat="project in projects">
-          <div class="image">
-            <img src="/images/wireframe/image.png">
-          </div>
-          <div class="content">
+<section id="projects" class="ui page grid centered aligned">
+  <div class="ui active dimmer">
+    <div class="ui text loader">Loading</div>
+  </div>
+  <div class="ten wide column">
+    <div class="ui divided items">
+      <div id="{{ project.id }}" class="item" ng-repeat="project in projects">
+        <div class="image">
+          <img src="/images/wireframe/image.png">
+        </div>
+        <div class="content">
+          <div class="row">
             <a ui-sref="project({id: '{{ project.id }}' })" class="header">{{ project.get('title') }}</a>
             <div class="meta">
               <span class="cinema"></span>
@@ -24,12 +27,15 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <span ng-repeat="contributor in project.contributors"><i class="user icon"></i>{{ contributor.get('nick') }}</span>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="four wide column">
-      hi
-    </div>
+  </div>
+  <div class="four wide column">
+    hi
+  </div>
 
 </section>

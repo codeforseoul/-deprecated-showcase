@@ -13,6 +13,10 @@ angular.module('showcaseApp')
     parseSDK.getById('Project', $stateParams.id)
       .then(function (project) {
         $scope.project = project;
+        project.relation('contributors').query().find().then(function (users) {
+          $scope.project.contributors = users;
+          $scope.$apply();
+        })
       })
 
   });

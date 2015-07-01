@@ -1,29 +1,12 @@
-<!-- Add your site or application content here -->
-<div class="navbar navbar-default" role="navigation" ng-controller="NavCtrl">
-  <div class="navbar-header">
-
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-
-    <a class="navbar-brand" ui-sref="main">showcase</a>
+<div class="ui menu">
+  <div class="header item">
+    <a ui-sref="main">Code for Seoul</a>
   </div>
-
-  <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-    <ul class="nav navbar-nav">
-      <li class="active"><a ui-sref="main">Home</a></li>
-      <li><a ui-sref="projects">프로젝트 찾아보기</a></li>
-      <li><a ui-sref="/">Contact</a></li>
-    </ul>
-
-    <ul class="nav navbar-nav navbar-right">
-        <!-- Check if user signined using rootScope -->
-        <li><a ui-sref="newproject">새 프로젝트</a></li>
-        <li><a ui-sref="signup">가입하기</a></li>
-      </ul>
+  <a ui-sref="projects" class="item">프로젝트 찾아보기</a>
+  <div class="right menu">
+    <a ui-sref="newproject" class="item">새 프로젝트</a>
+    <a  ng-if="currentUser == null" ui-sref="signup" class="item">가입하기</a>
+    <a ng-if="currentUser == null" ui-sref="signin" class="item">로그인</a>
+    <div ng-if="currentUser != null" class="item link" ng-click="logOut()">로그아웃</div>
   </div>
 </div>

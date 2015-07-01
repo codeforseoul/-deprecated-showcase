@@ -2,14 +2,61 @@
 
 angular
   .module('showcaseApp')
-    .factory('parseSDK', ['$q', function ($q) {
-      var self = this;
+    .factory('parseSDK', ['$q', '$rootScope', function ($q, $rootScope) {
       // Parse App Key: showcase
       Parse.initialize("Z0hMb4HRaZMuDtEPRwKKI6qq0hr06bpH6PGFaxQL", "pfWLen1gM2ySvmHkVaNpdRzKjUGskPGtr85AuI5Q");
 
       var Project = Parse.Object.extend('Project');
 
       return {
+        signIn: function (user) {
+          var deferred = $q.defer();
+
+          Parse.User.logIn(user.username, user.password, {
+            success: function(user) {
+              deferred.resolve(user);
+            },
+            error: function(user, error) {
+              deferred.reject(error);
+            }
+          });
+
+          return deferred.promise;
+        },
+
+        signUp: function (user) {
+          var deferred = $q.defer();
+          var newUser = new Parse.User();
+
+          Object.keys(user).forEach(function (el) {
+            if (el != 'rePassword') {
+              newUser.set(el, user[el]);
+            }
+          });
+
+          // newUser.set('emailVerified', false);
+
+          newUser.signUp(null, {
+            success: function(user) {
+              deferred.resolve(user);
+            },
+            error: function(user, error) {
+              deferred.reject(error);
+            }
+          });
+
+          return deferred.promise;
+        },
+
+        isLoggedIn: function () {
+          return Parse.User.current();
+        },
+
+        logOut: function () {
+          Parse.User.logOut();
+          $rootScope.currentUser = null;
+        },
+
         getById: function (className, id, callback) {
           var cb = callback || angular.noop;
           var deferred = $q.defer();
@@ -53,13 +100,34 @@ angular
           return deferred.promise;
         },
 
-        addMemberToProject: function (userId, projectId, callback) {
+        createNewProject: function (project) {
           var self = this;
-          var cb = callback || angular.noop;
           var deferred = $q.defer();
+          var newProject = new Project();
 
+          if (!self.isLoggedIn()) return deferred.reject(new Error('need to signin'));
+
+          Object.keys(project).forEach(function (param) {
+            newProject.set(param, project[param]);
+          });
+
+          newProject.relation('administrators').add(Parse.User.current());
+          newProject.relation('contributors').add(Parse.User.current());
+
+          newProject.save().then(function(savedProject) {
+            deferred.resolve(savedProject);
+          }, function (error) {
+            deferred.reject(error);
+          })
+
+          return deferred.promise;
+        },
+
+        addMemberToProject: function (userId, projectId) {
+          var self = this;
+          var deferred = $q.defer();
           var userQ = new Parse.Query(Parse.User);
-          var projectQ = new Parse.Query(Project);
+
           self.getById('User', userId)
             .then(function (user) {
               self.getById('Project', projectId)

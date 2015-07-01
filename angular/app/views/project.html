@@ -1,12 +1,25 @@
 <section class="ui page grid">
   <div class="ten wide column">
     <h1 class="ui dividing header">{{ project.get('title') }}<a id="types" class="anchor"></a></h1>
+    <p>{{ project.get('desc') }}</p>
   </div>
   <div class="four wide column">
+    <h3 class="ui dividing header">기여자</h3>
+    <div class="ui tiny horizontal list">
+      <div class="item" ng-repeat="contributor in project.contributors">
+        <div class="ui avatar image">
+          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
+        </div>
+        <div class="content">
+          <a class="header">{{ contributor.get('nick') }}</a>
+        </div>
+      </div>
+    </div>
+    <h3 class="ui dividing header">참여 기록</h3>
     <div class="ui feed">
       <div class="event">
         <div class="label">
-          <img src="/images/avatar/small/elliot.jpg">
+          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
         </div>
         <div class="content">
           <div class="summary">
@@ -47,7 +60,7 @@
       </div>
       <div class="event">
         <div class="label">
-          <img src="/images/avatar/small/helen.jpg">
+          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
         </div>
         <div class="content">
           <div class="date">
@@ -69,7 +82,7 @@
       </div>
       <div class="event">
         <div class="label">
-          <img src="/images/avatar/small/jenny.jpg">
+          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
         </div>
         <div class="content">
           <div class="summary">
@@ -89,7 +102,7 @@
       </div>
       <div class="event">
         <div class="label">
-          <img src="/images/avatar/small/joe.jpg">
+          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
         </div>
         <div class="content">
           <div class="summary">
@@ -110,7 +123,7 @@
       </div>
       <div class="event">
         <div class="label">
-          <img src="/images/avatar/small/justen.jpg">
+          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
         </div>
         <div class="content">
           <div class="date">

@@ -1,103 +1,20 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-// bower:scss
-@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-// endbower
-
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
 body {
-  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+      flex-direction: column;
 }
 
-a {
-  cursor: pointer;
-}
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-header,
-footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-/* Custom page header */
-nav {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-
-  .navbar {
-    margin-bottom: 0px;
-    border: none;
-  }
-
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
-}
-
-header.featured-projects {
-  min-height: 300px;
-}
-
-.projects {
-  .project {
-    .contributors {
-      padding-top: 20px;
-      padding-bottom: 10px;
-
-      .contributor {
-        list-style: none;
-        float: left;
-        margin-left: 5px;
-
-        img {
-          width: 50px;
-        }
-      }
-    }
-
-    .category {
-      margin-left: 10px;
-    }
-  }
-}
-
-/* Custom page footer */
-footer {
-  text-align: center;
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-  clear: both;
-}
-
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-
-  /* Remove the padding we set earlier */
-  header,
-  footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  header {
-    margin-bottom: 30px;
-  }
+#main {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
 }
