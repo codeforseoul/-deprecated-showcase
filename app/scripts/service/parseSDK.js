@@ -104,11 +104,17 @@ angular
           var self = this;
           var deferred = $q.defer();
           var newProject = new Project();
+          var newProjectCats = newProject.relation('categories');
 
           if (!self.isLoggedIn()) return deferred.reject(new Error('need to signin'));
 
           Object.keys(project).forEach(function (param) {
             newProject.set(param, project[param]);
+          });
+
+
+          project.cats.forEach(function (cat) {
+            newProjectCats.add(cat);
           });
 
           newProject.relation('administrators').add(Parse.User.current());

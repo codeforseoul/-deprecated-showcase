@@ -13,10 +13,12 @@
           </div>
           <div class="field">
             <label>프로젝트 종류</label>
-            <select class="ui dropdown" ng-model="newProject.kind">
-              <option value="github">깃허브</option>
-              <option value="googleDocs">구글 문서</option>
+            <select name="skills" multiple="" class="ui fluid dropdown" ng-model="selectedCats">
+              <option value="{{ cat.id }}" ng-repeat="cat in allCats">{{ cat.get('title') }}</option>
             </select>
+            <script>
+              $('.ui.dropdown').dropdown();
+            </script>
           </div>
         </div>
         <div class="field">
