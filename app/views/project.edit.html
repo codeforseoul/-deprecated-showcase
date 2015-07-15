@@ -1,0 +1,34 @@
+<section class="ui padded centered grid">
+  <div class="ten wide column">
+    <form name="projectEditForm" class="ui error form segment" ng-submit="editProject()">
+      <div class="ui error message" style="display: none;">
+        <div class="header">Action Forbidden</div>
+        <p>You can only sign up for an account once with a given e-mail address.</p>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>프로젝트 이름</label>
+          <input placeholder="프로젝트 이름" type="text" ng-model="project.title">
+        </div>
+        <div class="field">
+          <label>프로젝트 종류</label>
+          <!-- <select name="skills" multiple="" class="ui fluid dropdown" ng-model="selectedCats">
+            <option value="{{ cat.id }}" ng-repeat="cat in cats">{{ cat.get('title') }}</option>
+          </select> -->
+          <script>
+            $('.ui.dropdown').dropdown();
+          </script>
+        </div>
+      </div>
+      <div class="field">
+        <label>프로젝트 설명</label>
+        <textarea placeholder="프로젝트 설명" ng-model="project.desc"></textarea>
+      </div>
+      <div class="field">
+        <label>프로젝트 주소</label>
+        <input placeholder="https://github.com/codeforseoul/showcase" type="text" ng-model="project.url">
+      </div>
+      <button type="submit" class="ui submit button">시빅해킹 주인공 되기!</button>
+    </form>
+  </div>
+</section>

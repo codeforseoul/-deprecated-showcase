@@ -57,8 +57,7 @@ angular
           $rootScope.currentUser = null;
         },
 
-        getById: function (className, id, callback) {
-          var cb = callback || angular.noop;
+        getById: function (className, id) {
           var deferred = $q.defer();
 
           var classObject = className == 'User' ? Parse.User : Parse.Object.extend(className);
@@ -67,34 +66,52 @@ angular
           query.get(id, {
             success: function (row) {
               deferred.resolve(row);
-              return cb();
             },
             error: function (row,error) {
               deferred.reject(error);
-              return cb();
             }
           });
 
           return deferred.promise;
         },
 
-        getRows: function (className, count) {
-          var queryCount = count ? count : 0;
+        getRows: function (className, params) {
           var deferred = $q.defer();
-
           var classObject = className == 'User' ? Parse.User : Parse.Object.extend(className);
           var query = new Parse.Query(classObject);
 
-          // set limit number of rows to get if you want
-          if (count > 0) query.limit(queryCount);
+          if (params) {
+            Object.keys(params).forEach(function (el) {
+              if ((typeof params[el]) == 'object') {
+                query[el](params[el][0], params[el][1])
+              } else {
+                query[el](params[el]);
+              }
+            });
+          }
 
-          query.find({
-            success: function (rows) {
-              deferred.resolve(rows);
-            },
-            error: function (rows, error) {
-              deferred.reject(error);
-            }
+          query.find().then(function(rows) {
+            deferred.resolve(rows);
+          }, function (error) {
+            deferred.reject(error);
+          });
+
+          return deferred.promise;
+        },
+
+        postARow: function (className, params) {
+          var deferred = $q.defer();
+          var Obj = Parse.Object.extend(className);
+          var obj = new Obj();
+
+          Object.keys(params).forEach(function (key) {
+            obj.set(key, params[key]);
+          });
+
+          obj.save().then(function (newObj) {
+            deferred.resolve(newObj);
+          }, function (error) {
+            deferred.reject(error);
           });
 
           return deferred.promise;

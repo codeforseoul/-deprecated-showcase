@@ -52,6 +52,11 @@ angular
         templateUrl: 'views/project.html',
         controller: 'ProjectCtrl'
       })
+      .state('projectEdit', {
+        url: '/project/:id/edit',
+        templateUrl: 'views/project.edit.html',
+        controller: 'ProjectEditCtrl'
+      })
       .state('projects', {
         url: '/projects',
         templateUrl: 'views/projects.html',

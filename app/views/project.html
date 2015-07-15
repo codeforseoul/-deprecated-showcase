@@ -1,9 +1,43 @@
-<section class="ui page grid">
+<section class="ui padded centered grid">
   <div class="ten wide column">
     <h1 class="ui dividing header">{{ project.get('title') }}<a class="ui {{ cat.get('label') }} label" ng-repeat="cat in project.cats">{{ cat.get('title') }}</a></h1>
     <p>{{ project.get('desc') }}</p>
+    <h1 class="ui dividing header">업데이트</h1>
+    <div class="ui one cards">
+      <div class="card" ng-repeat="u in updates">
+        <div class="content">
+          <i class="right floated user icon"></i>
+          <div class="right floated">{{ u.get('user').get('nick') }}</div>
+          <div class="header">{{ u.get('title') }}</div>
+          <div class="meta"><span class="date">{{ u.createdAt + 9000 }}</span></div>
+          <div class="description">
+            <p>{{ u.get('content') }}</p>
+          </div>
+        </div>
+        <div class="extra content">
+          <span class="left floated like">
+            <i class="like icon"></i>
+            Like
+          </span>
+          <span class="right floated star">
+            <i class="star icon"></i>
+            Favorite
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="four wide column">
+    <div class="row managing">
+      <h3 class="ui dividing header">관리도구</h3>
+      <div class="row" ng-if="isContributor">
+        <!-- <div class="ui basic button" ng-click="editProject()">프로젝트 수정하기</div> -->
+        <div class="ui basic button" ng-click="openUpdateForm()">업데이트</div>
+      </div>
+      <div class="row" ng-if="!isContributor">
+        <div class="ui basic button" ng-click="contribute()">프로젝트 참여하기</div>
+      </div>
+    </div>
     <h3 class="ui dividing header">기여자</h3>
     <div class="ui tiny horizontal list">
       <div class="item" ng-repeat="contributor in project.contributors">
@@ -115,3 +149,26 @@
     </div>
   </div>
 </section>
+
+<form id="update-form" class="ui modal" ng-submit="addUpdate()">
+  <i class="close icon"></i>
+  <div class="header">
+    부지런하시군요!
+  </div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>제목</label>
+        <input type="text" placeholder="업데이트 주요 내용" ng-model="newUpdate.title">
+      </div>
+      <div class="field">
+        <label>세부 내용</label>
+        <textarea placeholder="업데이트 세부 내용" ng-model="newUpdate.content"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui button">취소</button>
+    <button type="submit" class="ui green button">완료!</button>
+  </div>
+</form>
