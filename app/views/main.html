@@ -1,5 +1,38 @@
 
-<h2 class="ui center aligned icon header">
-  <i class="circular users icon"></i>
-  We're all civic hackers! - Code for Seoul
-</h2>
+<header class="ui vertical center aligned segment">
+  <div class="ui text container">
+    <h2 class="ui center aligned icon header">
+      <i class="circular users icon"></i>
+      We're all civic hackers! - Code for Seoul
+    </h2>
+  </div>
+</header>
+<section id="main-projects" class="ui three column grid">
+    <div class="ui link three cards stackable container">
+      <div class="card" ng-repeat="p in projects">
+        <a ui-sref="project({id: '{{ p.id }}'})">
+          <div class="image">
+            <img src="/images/image.png">
+          </div>
+          <div class="content">
+            <div class="header">{{ p.get('title') }}</div>
+            <div class="meta">
+              <a>Friends</a>
+            </div>
+            <div class="description">
+              {{ p.get('desc') }}
+            </div>
+          </div>
+          <div class="extra content">
+            <span class="right floated">
+              {{ p.get('createdAt') }}
+            </span>
+            <span>
+              <i class="user icon"></i>
+              {{ p.contributors.length }}명
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+</section>

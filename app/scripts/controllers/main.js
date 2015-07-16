@@ -10,8 +10,8 @@
 angular.module('showcaseApp')
   .controller('MainCtrl', function ($scope, $q, parseSDK) {
     $scope.projects = [];
-    /*
-    parseSDK.getRows('Project', 0)
+    
+    parseSDK.getRows('Project')
       .then(function (projects) {
         $scope.projects = projects;
 
@@ -24,5 +24,4 @@ angular.module('showcaseApp')
           });
         });
       });
-      */
   });

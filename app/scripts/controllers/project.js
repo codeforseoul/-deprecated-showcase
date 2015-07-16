@@ -71,6 +71,10 @@ angular.module('showcaseApp')
         }
       });
 
+    function convertDate(date) {
+      
+    };
+
     $scope.contribute = function () {
       $state.reload();
       // parseSDK.addMemberToProject(currentProject.id, Parse.User.current().id)

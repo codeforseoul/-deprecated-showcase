@@ -1,3 +1,8 @@
+header {
+  height: 55vh;
+  min-height: 300px;
+}
+
 body {
   display: -webkit-box;
   display: -webkit-flex;
@@ -10,11 +15,11 @@ body {
       flex-direction: column;
 }
 
-#main {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-      -ms-flex: auto;
-          flex: auto;
+.cards > .card img {
+  width: 100%;
+}
+
+#main-projects {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
