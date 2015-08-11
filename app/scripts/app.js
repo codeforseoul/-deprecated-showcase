@@ -44,7 +44,7 @@ angular
       })
       .state('newproject', {
         url: '/project/new',
-        templateUrl: 'views/newProject.html',
+        templateUrl: 'views/project.new.html',
         controller: 'NewprojectCtrl'
       })
       .state('project', {

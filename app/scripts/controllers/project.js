@@ -25,10 +25,13 @@ angular.module('showcaseApp')
         currentProject = project;
         $scope.project = project;
 
-        parseSDK.getRows('Update', {
-          include: 'user',
-          equalTo: ['project', project]
-        }).then(function (updates) {
+        parseSDK.getRows('Update', [{
+          query: 'include',
+          value: 'user'
+        },{
+          query: 'equalTo',
+          value: ['project', project]
+        }]).then(function (updates) {
           $scope.updates = updates;
           $scope.updates.forEach(function (u) {
             u.createdAt = convertDate(u.createdAt);
@@ -72,7 +75,7 @@ angular.module('showcaseApp')
       });
 
     function convertDate(date) {
-      
+
     };
 
     $scope.contribute = function () {

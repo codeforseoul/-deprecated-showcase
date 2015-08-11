@@ -31,8 +31,22 @@ angular.module('showcaseApp')
         })
       });
 
-      parseSDK.createNewProject($scope.newProject)
-        .then(function (newProject) {
+      parseSDK.postARow('Project', {
+        set: [{
+          column: 'title',
+          value: $scope.newProject.title
+        }, {
+          column: 'desc',
+          value: $scope.newProject.desc
+        }, {
+          column: 'url',
+          value: $scope.newProject.url
+        }],
+        relation: [{
+          column: 'categories',
+          value: $scope.newProject.cats
+        }]
+      }).then(function (newProject) {
           alert('success!');
 
           $state.go('project', {id: newProject.id}, {

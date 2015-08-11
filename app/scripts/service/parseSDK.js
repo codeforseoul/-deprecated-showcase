@@ -81,13 +81,16 @@ angular
           var query = new Parse.Query(classObject);
 
           if (params) {
-            Object.keys(params).forEach(function (el) {
-              if ((typeof params[el]) == 'object') {
-                query[el](params[el][0], params[el][1])
-              } else {
-                query[el](params[el]);
+            params.forEach(function (param) {
+              switch (param.query) {
+                case 'equalTo':
+                  query[param.query](param.value[0], param.value[1]);
+                  break;
+                default:
+                  query[param.query](param.value);
+                  break;
               }
-            });
+            })
           }
 
           query.find().then(function(rows) {
@@ -104,8 +107,26 @@ angular
           var Obj = Parse.Object.extend(className);
           var obj = new Obj();
 
-          Object.keys(params).forEach(function (key) {
-            obj.set(key, params[key]);
+          Object.keys(params).forEach(function (param) {
+            switch (param) {
+              case 'set':
+                params[param].forEach(function (el) {
+                  obj.set(el.column, el.value);
+                });
+                break;
+              case 'relation':
+                params[param].forEach(function (els) {
+                  var r = obj.relation(els.column);
+                  if (typeof els.value == 'object') {
+                    els.value.forEach(function (el) {
+                      r.add(el);
+                    });
+                  }
+                });
+                break;
+              default:
+                break;
+            }
           });
 
           obj.save().then(function (newObj) {
@@ -121,21 +142,10 @@ angular
           var self = this;
           var deferred = $q.defer();
           var newProject = new Project();
-          var newProjectCats = newProject.relation('categories');
-
-          if (!self.isLoggedIn()) return deferred.reject(new Error('need to signin'));
-
-          Object.keys(project).forEach(function (param) {
-            newProject.set(param, project[param]);
-          });
-
 
           project.cats.forEach(function (cat) {
             newProjectCats.add(cat);
           });
-
-          newProject.relation('administrators').add(Parse.User.current());
-          newProject.relation('contributors').add(Parse.User.current());
 
           newProject.save().then(function(savedProject) {
             deferred.resolve(savedProject);

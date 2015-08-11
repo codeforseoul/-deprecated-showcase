@@ -9,9 +9,20 @@
  */
 angular.module('showcaseApp')
   .controller('ProjectsCtrl', function ($scope, $rootScope, parseSDK) {
+    $scope.cats = [];
     $scope.projects = [];
+    $scope.catsForFilter = [];
+
+    parseSDK.getRows('SubCategory')
+      .then(function (cats) {
+        $scope.cats = cats;
+      })
+
     parseSDK.getRows('Project')
       .then(function (projects) {
+        // remove loader
+        removeLoader();
+
         $scope.projects = projects;
 
         projects.forEach(function (project, index) {
@@ -30,11 +41,35 @@ angular.module('showcaseApp')
 
                 return false;
               });
-
-              // remove loader
-              $("#projects  .dimmer").removeClass('active');
             }
           });
         });
-      })
+      });
+
+    $scope.filterByCat = function (event, a) {
+      if ($(event.target).hasClass('blue')) {
+        $(event.target).removeClass('blue');
+        removeItem($scope.catsForFilter, a);
+      } else {
+        $(event.target).addClass('blue');
+        $scope.catsForFilter.push(a);
+      }
+
+      console.log($scope.catsForFilter);
+    };
+
+    function removeItem (arr, item) {
+      var index = arr.indexOf(item);
+
+      if (index > -1) {
+        arr.splice(index, 1);
+        return arr;
+      } else {
+        return arr;
+      }
+    };
+
+    function removeLoader () {
+      $("#projects  .dimmer").removeClass('active');
+    };
   });

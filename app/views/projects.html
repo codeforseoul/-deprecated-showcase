@@ -1,41 +1,44 @@
-<section id="projects" class="ui page grid centered aligned">
+<section id="projects" class="ui centered padded grid">
   <div class="ui active dimmer">
-    <div class="ui text loader">Loading</div>
+    <div class="ui text loader">프로젝트 불러오는 중</div>
   </div>
-  <div class="ten wide column">
-    <div class="ui divided items">
-      <div id="{{ project.id }}" class="item" ng-repeat="project in projects">
-        <div class="image">
-          <img src="/images/wireframe/image.png">
-        </div>
-        <div class="content">
-          <div class="row">
-            <a ui-sref="project({id: '{{ project.id }}' })" class="header">{{ project.get('title') }}</a>
-            <div class="meta">
-              <span class="cinema"></span>
-            </div>
-            <div class="description">
-              <p>{{ project.get('desc') }}</p>
-            </div>
-            <div class="extra">
-              <div class="ui label" ng-repeat="tag in project.get('tags')">
-                {{ tag }}
-              </div>
-              <div class="ui right floated primary button">
-                참여하기
-                <i class="right chevron icon"></i>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <span ng-repeat="contributor in project.contributors"><i class="user icon"></i>{{ contributor.get('nick') }}</span>
-          </div>
+  <div class="row">
+    <div class="ui horizontal list">
+      <div class="item" ng-repeat="c in cats">
+        <div class="ui label" ng-click="filterByCat($event, '{{ c.get('title') }}')">
+          <i class="mail icon"></i> {{ c.get('title') }} {{ c.get('count') }}
         </div>
       </div>
     </div>
   </div>
-  <div class="four wide column">
-    hi
+  <div class="ui divider"></div>
+  <div class="row">
+    <div class="ui link three cards stackable container">
+      <div class="card" ng-repeat="p in projects | queryByCategories:catsForFilter">
+        <a ui-sref="project({id: '{{ p.id }}'})">
+          <div class="image">
+            <img src="/images/image.png">
+          </div>
+          <div class="content">
+            <div class="header">{{ p.get('title') }}</div>
+            <div class="meta">
+              <a>Friends</a>
+            </div>
+            <div class="description">
+              {{ p.get('desc') }}
+            </div>
+          </div>
+          <div class="extra content">
+            <span class="right floated">
+              {{ p.get('createdAt') }}
+            </span>
+            <span>
+              <i class="user icon"></i>
+              {{ p.contributors.length }}명
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
-
 </section>
