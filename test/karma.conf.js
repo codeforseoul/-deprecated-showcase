@@ -30,6 +30,8 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/semantic-ui/dist/semantic.js',
+      'bower_components/showdown/src/showdown.js',
+      'bower_components/angular-markdown-directive/markdown.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

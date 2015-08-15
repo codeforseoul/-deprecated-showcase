@@ -18,3 +18,12 @@ body {
   padding-top: 5rem;
   padding-bottom: 5rem;
 }
+
+#page-projects .list.list-categories > .item {
+  cursor: pointer;
+}
+
+#page-project .readme {
+  background-color: #ccc;
+  padding: 3rem;
+}

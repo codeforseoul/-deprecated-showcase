@@ -54,8 +54,6 @@ angular.module('showcaseApp')
         $(event.target).addClass('blue');
         $scope.catsForFilter.push(a);
       }
-
-      console.log($scope.catsForFilter);
     };
 
     function removeItem (arr, item) {
@@ -70,6 +68,6 @@ angular.module('showcaseApp')
     };
 
     function removeLoader () {
-      $("#projects  .dimmer").removeClass('active');
+      $("#page-projects  .dimmer").removeClass('active');
     };
   });

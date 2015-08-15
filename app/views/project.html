@@ -1,7 +1,9 @@
-<section class="ui padded centered grid">
+<section id="page-project" class="ui padded centered grid">
   <div class="ten wide column">
-    <h1 class="ui dividing header">{{ project.get('title') }}<a class="ui {{ cat.get('label') }} label" ng-repeat="cat in project.cats">{{ cat.get('title') }}</a></h1>
+    <h1 class="ui dividing header">{{ project.get('title') }}<a class="ui label" ng-repeat="cat in project.get('categoriesToString')">{{ cat }}</a></h1>
     <p>{{ project.get('desc') }}</p>
+    <h1 class="ui dividing header">README.md</h1>
+    <div class="readme" btf-markdown="project.readme"></div>
     <h1 class="ui dividing header">업데이트</h1>
     <div class="ui one cards">
       <div class="card" ng-repeat="u in updates">
@@ -112,6 +114,21 @@
           <div class="meta">
             <a class="ui label">
               {{ event.payload.ref }}
+            </a>
+          </div>
+        </div>
+        <div class="content" ng-if="event.type == 'DeleteEvent'">
+          <div class="summary">
+            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+              {{ event.actor.login }}
+            </a>님이 "{{ event.payload.ref }}" {{ event.payload.ref_type }}을(를) 삭제하였습니다.
+            <div class="date">
+              {{ event.created_at }}
+            </div>
+          </div>
+          <div class="meta">
+            <a class="ui label" ng-repeat="label in event.payload.issue.labels" style="background-color: #{{ label.color }} !important; color: white;">
+              {{ label.name }}
             </a>
           </div>
         </div>

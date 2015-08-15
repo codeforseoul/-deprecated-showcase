@@ -57,11 +57,24 @@ angular
           $rootScope.currentUser = null;
         },
 
-        getById: function (className, id) {
+        getById: function (className, id, params) {
           var deferred = $q.defer();
 
-          var classObject = className == 'User' ? Parse.User : Parse.Object.extend(className);
-          var query = new Parse.Query(classObject);
+          var ClassObject = className == 'User' ? Parse.User : Parse.Object.extend(className);
+          var query = new Parse.Query(ClassObject);
+
+          if (params) {
+            params.forEach(function (param) {
+              switch (param.query) {
+                case 'equalTo':
+                  query[param.query](param.value[0], param.value[1]);
+                  break;
+                default:
+                  query[param.query](param.value);
+                  break;
+              }
+            })
+          }
 
           query.get(id, {
             success: function (row) {
@@ -136,6 +149,28 @@ angular
           });
 
           return deferred.promise;
+        },
+
+        putARow: function (obj, params) {
+          var deferred = $q.defer();
+
+          params.forEach(function (param) {
+            switch (param.query) {
+              case 'set':
+                obj.set(param.value[0], param.value[1]);
+                break;
+              case 'relation':
+                var relation = obj.relation(param.value[0]);
+                relation.add(param.value[1]);
+                break;
+            }
+          });
+
+          obj.save().then(function (newObj) {
+            deferred.resolve(newObj);
+          }, function (error) {
+            deferred.reject(error);
+          })
         },
 
         createNewProject: function (project) {

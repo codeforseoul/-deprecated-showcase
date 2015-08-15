@@ -1,9 +1,9 @@
-<section id="projects" class="ui centered padded grid">
+<section id="page-projects" class="ui centered padded grid">
   <div class="ui active dimmer">
     <div class="ui text loader">프로젝트 불러오는 중</div>
   </div>
   <div class="row">
-    <div class="ui horizontal list">
+    <div class="ui horizontal list list-categories">
       <div class="item" ng-repeat="c in cats">
         <div class="ui label" ng-click="filterByCat($event, '{{ c.get('title') }}')">
           <i class="mail icon"></i> {{ c.get('title') }} {{ c.get('count') }}

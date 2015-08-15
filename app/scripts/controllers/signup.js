@@ -8,7 +8,7 @@
  * Controller of the showcaseApp
  */
 angular.module('showcaseApp')
-  .controller('SignupCtrl', function ($scope, $rootScope, $state, parseSDK) {
+  .controller('SignupCtrl', function ($scope, $rootScope, $http, $state, parseSDK) {
     var valid = false;
     $scope.newUser = {};
 
@@ -37,9 +37,7 @@ angular.module('showcaseApp')
             reload: true
           });
         }, function (error) {
-          console.log(error.message);
           $('#signup-form .ui.error.message').show();
         });
     };
-
   });

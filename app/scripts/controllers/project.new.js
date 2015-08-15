@@ -41,10 +41,19 @@ angular.module('showcaseApp')
         }, {
           column: 'url',
           value: $scope.newProject.url
+        }, {
+          column: 'creator',
+          value: $scope.currentUser
         }],
         relation: [{
           column: 'categories',
           value: $scope.newProject.cats
+        }, {
+          column: 'contributors',
+          value: [$scope.currentUser]
+        }, {
+          column: 'administrators',
+          value: [$scope.currentUser]
         }]
       }).then(function (newProject) {
           alert('success!');

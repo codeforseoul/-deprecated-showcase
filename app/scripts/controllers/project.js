@@ -10,8 +10,8 @@
 angular.module('showcaseApp')
   .controller('ProjectCtrl', function ($scope, $state, $stateParams, parseSDK, githubSDK) {
     var currentProject;
+
     $scope.isContributor = false;
-    $scope.project = {};
     $scope.project = {
       contributors: [],
       cats: [],
@@ -34,7 +34,7 @@ angular.module('showcaseApp')
         }]).then(function (updates) {
           $scope.updates = updates;
           $scope.updates.forEach(function (u) {
-            u.createdAt = convertDate(u.createdAt);
+            u.convertedCreatedAt = convertDate(u.createdAt);
           })
         });
 
@@ -55,22 +55,24 @@ angular.module('showcaseApp')
         });
 
         // get a list of project's categories
-        project.relation('categories').query().find().then(function (cats) {
-          $scope.project.cats = cats;
-          $scope.$apply();
-        });
+        // project.relation('categories').query().find().then(function (cats) {
+        //   $scope.project.cats = cats;
+        //   $scope.$apply();
+        // });
 
         if (project.get('github')) {
           githubSDK.getEvents(project.get('github').owner, project.get('github').repo)
             .then(function (events) {
               $scope.project.events = events;
+              console.log(events[0]);
             });
 
           // // get readme.md instead of description
-          // githubSDK.getReadme(project.get('github').owner, project.get('github').repo)
-          //   .then(function (readme) {
-          //     $scope.project.readme = readme;
-          //   });
+          githubSDK.getReadme(project.get('github').owner, project.get('github').repo)
+            .then(function (readme) {
+              // $scope.project.readme = readme;
+              $scope.project.readme = decodeURIComponent(escape(atob(readme.content)));
+            });
         }
       });
 
@@ -79,7 +81,18 @@ angular.module('showcaseApp')
     };
 
     $scope.contribute = function () {
-      $state.reload();
+      if ($scope.currentUser) {
+        parseSDK.putARow(currentProject, [{
+          query: 'relation',
+          value: ['contributors', $scope.currentUser]
+        }]).then(function (newProject) {
+          console.log(newProject);
+          $state.reload();
+        })
+      } else {
+        alert("로그인이 필요합니다.");
+        $state.go('signin');
+      }
       // parseSDK.addMemberToProject(currentProject.id, Parse.User.current().id)
       //   .then(function (project) {
       //     $state.go()
