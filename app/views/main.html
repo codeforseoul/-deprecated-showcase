@@ -6,7 +6,7 @@
     </h2>
   </div>
 </header>
-<section id="main-projects" class="ui three column grid">
+<section id="main-projects" class="ui three column centered padded grid">
     <div class="ui link three cards stackable container">
       <div class="card" ng-repeat="p in projects">
         <a ui-sref="project({id: '{{ p.id }}'})">
@@ -16,7 +16,7 @@
           <div class="content">
             <div class="header">{{ p.get('title') }}</div>
             <div class="meta">
-              <a>Friends</a>
+              <a></a>
             </div>
             <div class="description">
               {{ p.get('desc') }}
@@ -27,7 +27,7 @@
               {{ p.get('createdAt') }}
             </span>
             <span>
-              <i class="user icon"></i>
+              <i class="users icon"></i>
               {{ p.contributors.length }}명
             </span>
           </div>

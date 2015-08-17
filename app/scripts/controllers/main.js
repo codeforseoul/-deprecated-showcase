@@ -10,7 +10,7 @@
 angular.module('showcaseApp')
   .controller('MainCtrl', function ($scope, $q, parseSDK) {
     $scope.projects = [];
-    
+
     parseSDK.getRows('Project')
       .then(function (projects) {
         $scope.projects = projects;

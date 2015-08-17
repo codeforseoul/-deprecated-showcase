@@ -170,7 +170,9 @@ angular
             deferred.resolve(newObj);
           }, function (error) {
             deferred.reject(error);
-          })
+          });
+
+          return deferred.promise;
         },
 
         createNewProject: function (project) {

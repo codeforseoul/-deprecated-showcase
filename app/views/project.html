@@ -32,11 +32,11 @@
   <div class="four wide column">
     <div class="row managing">
       <h3 class="ui dividing header">관리도구</h3>
-      <div class="row" ng-if="isContributor">
+      <div class="row" ng-if="isAdmin">
         <!-- <div class="ui basic button" ng-click="editProject()">프로젝트 수정하기</div> -->
         <div class="ui basic button" ng-click="openUpdateForm()">업데이트</div>
       </div>
-      <div class="row" ng-if="!isContributor">
+      <div class="row" ng-if="!isAdmin">
         <div class="ui basic button" ng-click="contribute()">프로젝트 참여하기</div>
       </div>
     </div>
