@@ -12,7 +12,6 @@ angular.module('showcaseApp')
     $scope.newProject = {};
     $scope.allCats = [];
     $scope.selectedCats = [];
-    $scope.newProject.cats = [];
 
     parseSDK.getRows('SubCategory')
       .then(function (categories) {
@@ -20,16 +19,22 @@ angular.module('showcaseApp')
       });
 
     $scope.createAProject = function () {
+      $scope.newProject.cats = [];
+      $scope.newProject.catsToString = [];
+
       // convert cats' id to objects
       $scope.selectedCats.forEach(function (selectedCat) {
         $scope.allCats.some(function (cat) {
           if (cat.id === selectedCat) {
             $scope.newProject.cats.push(cat);
+            $scope.newProject.catsToString.push(cat.get('title'))
             return true;
           }
           return false;
         })
       });
+
+      console.log($scope.newProject.catsToString);
 
       parseSDK.postARow('Project', {
         set: [{
@@ -44,6 +49,9 @@ angular.module('showcaseApp')
         }, {
           column: 'creator',
           value: $scope.currentUser
+        }, {
+          column: 'categoriesToString',
+          value: $scope.newProject.catsToString
         }],
         relation: [{
           column: 'categories',
