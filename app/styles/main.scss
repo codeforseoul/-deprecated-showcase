@@ -14,16 +14,68 @@ body {
   width: 100%;
 }
 
-#main-projects {
+header {
+  background: url(/images/header.jpg) no-repeat !important;
+  background-size: cover !important;
+  min-height: 450px !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+header .ui.header {
+  color: white;
+}
+
+#projects-main {
   padding-top: 5rem;
   padding-bottom: 5rem;
 }
 
-#page-projects .list.list-categories > .item {
+#projects-discover .list.list-categories > .item {
   cursor: pointer;
 }
 
-#page-project .readme {
+#projects-discover .ui.items.projects {
+  min-width: 80%;
+}
+
+#projects-discover .ui.items.projects .project {
+  text-align: left;
+}
+
+#projects-discover .ui.items.projects .project .content.about {
+  width: 25%;
+}
+
+#projects-discover .ui.items.projects .project .content.contributors {
+  margin-left: 2rem;
+}
+
+#projects-discover .ui.items.projects .project .content.contributors img.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  padding: .3rem;
+}
+
+#project .readme {
   background-color: #ccc;
   padding: 3rem;
+}
+
+#project .ui.list.contributors .item.contributor img.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
 }

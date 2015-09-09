@@ -8,7 +8,7 @@
  * Controller of the showcaseApp
  */
 angular.module('showcaseApp')
-  .controller('ProjectsCtrl', function ($scope, $rootScope, parseSDK) {
+  .controller('ProjectsCtrl', ['$scope', '$rootScope', '$state', 'parseSDK', function ($scope, $rootScope, $state, parseSDK) {
     $scope.cats = [];
     $scope.projects = [];
     $scope.catsForFilter = [];
@@ -16,7 +16,7 @@ angular.module('showcaseApp')
     parseSDK.getRows('SubCategory')
       .then(function (cats) {
         $scope.cats = cats;
-      })
+      });
 
     parseSDK.getRows('Project')
       .then(function (projects) {
@@ -25,25 +25,35 @@ angular.module('showcaseApp')
 
         $scope.projects = projects;
 
-        projects.forEach(function (project, index) {
-          project.relation('contributors').query().find({
-            success: function (users) {
-              $scope.projects[index].contributors = users;
-              $scope.$apply();
+        var promises = [];
 
-              // remove '참여하기' button
-              users.some(function (user) {
-                if (!$rootScope.currentUser) return true;
-                else if (user.id == $rootScope.currentUser.id) {
-                  $('#' + project.id + ' .ui.primary.button').hide();
+        projects.forEach(function (project, index) {
+          var promise = Parse.Promise.as();
+
+          promise = promise.then(function () {
+            return project.relation('contributors').query().find();
+          }).then(function (contributors) {
+            $scope.projects[index].contributors = contributors;
+            $scope.projects[index].isContributor = false;
+            $scope.$apply();
+
+            if ($scope.currentUser) {
+              contributors.some(function (contributor) {
+                if (contributor.id === $scope.currentUser.id) {
+                  $scope.projects[index].isContributor = true;
                   return true;
                 }
-
                 return false;
               });
             }
           });
+
+          promises.push(promise);
         });
+
+        return Parse.Promise.when(promises);
+      }).then(function () {
+
       });
 
     $scope.filterByCat = function (event, a) {
@@ -54,6 +64,20 @@ angular.module('showcaseApp')
         $(event.target).addClass('blue');
         $scope.catsForFilter.push(a);
       }
+    };
+
+    $scope.addContributor = function (projectId) {
+      parseSDK.putARow('Project', projectId, {
+        relation: [{
+          column: 'contributors',
+          value: Parse.User.current()
+        }]
+      }).then(function (newProject) {
+          alert('성공!');
+          $state.go('project', {id: projectId});
+        }, function (error) {
+          alert(error.message);
+        });
     };
 
     function removeItem (arr, item) {
@@ -68,6 +92,6 @@ angular.module('showcaseApp')
     };
 
     function removeLoader () {
-      $("#page-projects  .dimmer").removeClass('active');
+      $("#projects-discover .dimmer").removeClass('active');
     };
-  });
+  }]);

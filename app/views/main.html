@@ -1,12 +1,12 @@
 <header class="ui vertical center aligned segment">
   <div class="ui text container">
+    <a class="ui red version label" href="https://github.com/codeforseoul/showcase">1.0 - beta</a>
     <h2 class="ui center aligned icon header">
-      <i class="circular users icon"></i>
       We're all civic hackers! - Code for Seoul
     </h2>
   </div>
 </header>
-<section id="main-projects" class="ui three column centered padded grid">
+<section id="projects-main" class="ui three column centered padded grid">
     <div class="ui link three cards stackable container">
       <div class="card" ng-repeat="p in projects">
         <a ui-sref="project({id: '{{ p.id }}'})">

@@ -7,6 +7,7 @@ angular
       Parse.initialize("Z0hMb4HRaZMuDtEPRwKKI6qq0hr06bpH6PGFaxQL", "pfWLen1gM2ySvmHkVaNpdRzKjUGskPGtr85AuI5Q");
 
       var Project = Parse.Object.extend('Project');
+      var self = this;
 
       return {
         signIn: function (user) {
@@ -151,26 +152,44 @@ angular
           return deferred.promise;
         },
 
-        putARow: function (obj, params) {
+        putARow: function (className, id, params) {
           var deferred = $q.defer();
+          var self = this;
 
-          params.forEach(function (param) {
-            switch (param.query) {
-              case 'set':
-                obj.set(param.value[0], param.value[1]);
-                break;
-              case 'relation':
-                var relation = obj.relation(param.value[0]);
-                relation.add(param.value[1]);
-                break;
-            }
-          });
+          self.getById(className, id)
+            .then(function (obj) {
+              Object.keys(params).forEach(function (param) {
+                switch (param) {
+                  case 'set':
+                    params[param].forEach(function (el) {
+                      obj.set(el.column, el.value);
+                    });
+                    break;
+                  case 'relation':
+                    params[param].forEach(function (el) {
+                      var r = obj.relation(el.column);
+                      if (Array.isArray(el.value)) {
+                        el.value.forEach(function (value) {
+                          r.add(value);
+                        });
+                      } else {
+                        r.add(el.value);
+                      }
+                    });
+                    break;
+                  default:
+                    break;
+                }
+              });
 
-          obj.save().then(function (newObj) {
-            deferred.resolve(newObj);
-          }, function (error) {
-            deferred.reject(error);
-          });
+              obj.save().then(function (newObj) {
+                deferred.resolve(newObj);
+              }, function (error) {
+                deferred.reject(error);
+              });
+            }, function (error) {
+              deferred.reject(error);
+            });
 
           return deferred.promise;
         },

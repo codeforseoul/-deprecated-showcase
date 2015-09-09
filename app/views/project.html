@@ -1,4 +1,4 @@
-<section id="page-project" class="ui padded centered grid">
+<section id="project" class="ui padded centered grid">
   <div class="ten wide column">
     <h1 class="ui dividing header">{{ project.get('title') }}<a class="ui label" ng-repeat="cat in project.get('categoriesToString')">{{ cat }}</a></h1>
     <p>{{ project.get('desc') }}</p>
@@ -11,7 +11,7 @@
           <i class="right floated user icon"></i>
           <div class="right floated">{{ u.get('user').get('nick') }}</div>
           <div class="header">{{ u.get('title') }}</div>
-          <div class="meta"><span class="date">{{ u.createdAt + 9000 }}</span></div>
+          <div class="meta"><span class="date">{{ u.convertedCreatedAt }}</span></div>
           <div class="description">
             <p>{{ u.get('content') }}</p>
           </div>
@@ -31,20 +31,26 @@
   </div>
   <div class="four wide column">
     <div class="row managing">
-      <h3 class="ui dividing header">관리도구</h3>
+      <!-- <h3 class="ui dividing header">관리도구</h3> -->
       <div class="row" ng-if="isAdmin">
         <!-- <div class="ui basic button" ng-click="editProject()">프로젝트 수정하기</div> -->
-        <div class="ui basic button" ng-click="openUpdateForm()">업데이트</div>
+        <div class="ui basic button" ng-click="openModal('update')" ng-show="isAdmin">업데이트</div>
       </div>
       <div class="row" ng-if="!isAdmin">
-        <div class="ui basic button" ng-click="contribute()">프로젝트 참여하기</div>
+        <div class="ui basic button" ng-click="addContributor(project.id)" ng-show="!isContributor">프로젝트 참여하기</div>
+      </div>
+    </div>
+    <h3 class="ui dividing header">진행도</h3>
+    <div data-percent="{{ project.get('progress') }}" class="ui indicating progress active">
+      <div style="transition-duration: 300ms; width: {{ project.get('progress') }}%;" class="bar">
+        <div class="progress">{{ project.get('progress') }}%</div>
       </div>
     </div>
     <h3 class="ui dividing header">기여자</h3>
-    <div class="ui tiny horizontal list">
-      <div class="item" ng-repeat="contributor in project.contributors">
+    <div class="ui tiny horizontal list contributors">
+      <div class="item contributor" ng-repeat="c in project.contributors">
         <div class="ui avatar image">
-          <img src="http://semantic-ui.com/images/avatar/small/christian.jpg">
+          <img src="{{ c.get('profile') }}" alt="{{ c.get('nick') }}" title="{{ c.get('nick') }}" class="profile">
         </div>
         <div class="content">
           <a class="header">{{ contributor.get('nick') }}</a>
@@ -74,7 +80,7 @@
         </div>
         <div class="content" ng-if="event.type == 'IssuesEvent'">
           <div class="summary">
-            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
               {{ event.actor.login }}
             </a>님이 <a href="{{ event.payload.issue.html_url }}">이슈 #{{ event.payload.issue.number }}, '{{ event.payload.issue.title }}'</a>를 생성하였습니다.
             <div class="date">
@@ -89,7 +95,7 @@
         </div>
         <div class="content" ng-if="event.type == 'PushEvent'">
           <div class="summary">
-            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
               {{ event.actor.login }}
             </a>님이 Push 하였습니다.
             <div class="date">
@@ -104,7 +110,7 @@
         </div>
         <div class="content" ng-if="event.type == 'CreateEvent'">
           <div class="summary">
-            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
               {{ event.actor.login }}
             </a>님이 새 {{ event.payload.ref_type }}을 생성하였습니다.
             <div class="date">
@@ -119,7 +125,7 @@
         </div>
         <div class="content" ng-if="event.type == 'DeleteEvent'">
           <div class="summary">
-            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
               {{ event.actor.login }}
             </a>님이 "{{ event.payload.ref }}" {{ event.payload.ref_type }}을(를) 삭제하였습니다.
             <div class="date">
@@ -134,7 +140,7 @@
         </div>
         <div class="content" ng-if="event.type == 'ForkEvent'">
           <div class="summary">
-            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
               {{ event.actor.login }}
             </a>님이 <a href="{{ event.payload.forkee.html_url }}">포크</a>하였습니다.
             <div class="date">
@@ -149,7 +155,7 @@
         </div>
         <div class="content" ng-if="event.type == 'WatchEvent'">
           <div class="summary">
-            <a href="{{ event.payload.issue.user.html_url }}" target="_blank" class="user">
+            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
               {{ event.actor.login }}
             </a>님이 'Watch'하였습니다.
             <div class="date">
@@ -167,7 +173,7 @@
   </div>
 </section>
 
-<form id="update-form" class="ui modal" ng-submit="addUpdate()">
+<form class="ui modal update" ng-submit="addUpdate()">
   <i class="close icon"></i>
   <div class="header">
     부지런하시군요!
@@ -185,7 +191,7 @@
     </div>
   </div>
   <div class="actions">
-    <button class="ui button">취소</button>
+    <button class="ui button" ng-click="hideModal('update')">취소</button>
     <button type="submit" class="ui green button">완료!</button>
   </div>
 </form>

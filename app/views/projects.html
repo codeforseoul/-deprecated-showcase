@@ -1,4 +1,4 @@
-<section id="page-projects" class="ui centered padded grid">
+<section id="projects-discover" class="ui centered padded grid">
   <div class="ui active dimmer">
     <div class="ui text loader">프로젝트 불러오는 중</div>
   </div>
@@ -13,7 +13,43 @@
   </div>
   <div class="ui divider"></div>
   <div class="row">
-    <div class="ui link three cards stackable container">
+    <div class="ui items projects">
+      <div class="item project" ng-repeat="p in projects | queryByCategories:catsForFilter">
+        <div class="ui small image">
+          <img src="/images/image.png">
+        </div>
+        <div class="content about">
+          <div class="header">
+            <a ui-sref="project({id: '{{ p.id }}'})">{{ p.get('title') }}</a>
+          </div>
+          <div class="description">
+            <p>{{ p.get('desc') }}</p>
+          </div>
+          <div class="extra">
+            <div class="ui right floated">
+              <span ng-repeat="cat in p.get('categoriesToString')">{{ cat }} </span>
+            </div>
+            <div class="ui left floated red button" ng-click="addContributor(p.id)" ng-show="!p.isContributor">
+              참여하기
+            </div>
+          </div>
+        </div>
+        <div class="content contributors">
+          <div class="header">진행도</div>
+          <div data-percent="{{ p.get('progress') }}" class="ui indicating progress active">
+            <div style="transition-duration: 300ms; width: {{ p.get('progress') }}%;" class="bar">
+              <div class="progress">{{ p.get('progress') }}%</div>
+            </div>
+          </div>
+          <div class="header">기여자</div>
+          <div class="description">
+            <img src="{{ c.get('profile') }}" alt="{{ c.get('nick') }}" title="{{ c.get('nick') }}" class="profile" ng-repeat="c in p.contributors">
+            <!-- <img src="/images/image.png" alt="{{ }}"> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="ui link three cards stackable container">
       <div class="card" ng-repeat="p in projects | queryByCategories:catsForFilter">
         <a ui-sref="project({id: '{{ p.id }}'})">
           <div class="image">
@@ -22,10 +58,7 @@
           <div class="content">
             <div class="header">{{ p.get('title') }}</div>
             <div class="meta">
-              <a>Friends</a>
-            </div>
-            <div class="description">
-              {{ p.get('desc') }}
+              <a>{{ p.get('desc') }}</a>
             </div>
           </div>
           <div class="extra content">
@@ -39,6 +72,6 @@
           </div>
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>

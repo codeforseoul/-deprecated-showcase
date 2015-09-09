@@ -11,6 +11,7 @@ angular.module('showcaseApp')
   .controller('ProjectCtrl', function ($scope, $state, $stateParams, parseSDK, githubSDK) {
     var currentProject;
 
+    $scope.isAdmin = false;
     $scope.isContributor = false;
     $scope.project = {
       contributors: [],
@@ -26,13 +27,17 @@ angular.module('showcaseApp')
       .then(function (project) {
         currentProject = project;
         $scope.project = project;
-
+      })
+      .then(function () {
         parseSDK.getRows('Update', [{
           query: 'include',
           value: 'user'
-        },{
+        }, {
           query: 'equalTo',
-          value: ['project', project]
+          value: ['project', $scope.project]
+        }, {
+          query: 'descending',
+          value: 'createdAt'
         }]).then(function (updates) {
           $scope.updates = updates;
           $scope.updates.forEach(function (u) {
@@ -40,15 +45,29 @@ angular.module('showcaseApp')
           })
         });
 
-        // get a list of project's contributors
-        project.relation('administrators').query().find().then(function (users) {
+        // get a list of project's administrators
+        $scope.project.relation('administrators').query().find().then(function (users) {
           $scope.project.administrators = users;
           $scope.$apply();
 
           users.some(function (user) {
             if (user.id == Parse.User.current().id) {
               $scope.isAdmin = true;
-              $scope.$apply();
+              return true;
+            }
+
+            return false;
+          });
+        });
+
+        // get a list of project's contributors
+        $scope.project.relation('contributors').query().find().then(function (users) {
+          $scope.project.contributors = users;
+          $scope.$apply();
+
+          users.some(function (user) {
+            if (user.id == Parse.User.current().id) {
+              $scope.isContributor = true;
               return true;
             }
 
@@ -62,14 +81,14 @@ angular.module('showcaseApp')
         //   $scope.$apply();
         // });
 
-        if (project.get('github')) {
-          githubSDK.getEvents(project.get('github').owner, project.get('github').repo)
+        if ($scope.project.get('github')) {
+          githubSDK.getEvents($scope.project.get('github').owner, $scope.project.get('github').repo)
             .then(function (events) {
               $scope.project.events = events;
             });
 
           // // get readme.md instead of description
-          githubSDK.getReadme(project.get('github').owner, project.get('github').repo)
+          githubSDK.getReadme($scope.project.get('github').owner, $scope.project.get('github').repo)
             .then(function (readme) {
               $scope.project.readme = decodeURIComponent(escape(atob(readme.content)));
             });
@@ -77,7 +96,8 @@ angular.module('showcaseApp')
       });
 
     function convertDate(date) {
-
+      var convertedDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+      return convertedDate.getUTCMonth() + 1 + '월 ' + convertedDate.getUTCDate() + '일 ' + convertedDate.getUTCHours() + '시 ' + convertedDate.getUTCMinutes() + '분';
     };
 
     $scope.contribute = function () {
@@ -106,18 +126,46 @@ angular.module('showcaseApp')
       $state.go('projectEdit', {id: $scope.project.id});
     };
 
-    $scope.openUpdateForm = function () {
-      $('#update-form').modal('show');
+    $scope.openModal = function (target) {
+      $('.ui.modal.' + target).modal('show');
+    };
+
+    $scope.hideModal = function (target) {
+      $('.ui.modal.' + target).modal('hide');
     };
 
     $scope.addUpdate = function () {
       parseSDK.postARow('Update', {
-        user: Parse.User.current(),
-        project: currentProject,
-        title: $scope.newUpdate.title,
-        content: $scope.newUpdate.content,
+        set: [{
+          column: 'user',
+          value: Parse.User.current()
+        }, {
+          column: 'project',
+          value: currentProject
+        }, {
+          column: 'title',
+          value: $scope.newUpdate.title
+        }, {
+          column: 'content',
+          value: $scope.newUpdate.content
+        }]
       }).then(function (update) {
-        console.log(update);
+        $scope.updates.push(update);
+        $scope.hideModal('update');
       });
+    };
+
+    $scope.addContributor = function (projectId) {
+      parseSDK.putARow('Project', projectId, {
+        relation: [{
+          column: 'contributors',
+          value: Parse.User.current()
+        }]
+      }).then(function (newProject) {
+          alert('성공!');
+          $state.reload();
+        }, function (error) {
+          alert(error.message);
+        });
     };
   });
