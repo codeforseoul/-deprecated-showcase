@@ -1,67 +1,66 @@
+/* line 1, ../../app/styles/main.scss */
 body {
-  display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
 }
 
+/* line 13, ../../app/styles/main.scss */
 .cards > .card img {
   width: 100%;
 }
 
+/* line 17, ../../app/styles/main.scss */
 header {
   background: url(/images/header.jpg) no-repeat !important;
   background-size: cover !important;
   min-height: 450px !important;
-  display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
+  flex-direction: column;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 
+/* line 36, ../../app/styles/main.scss */
 header .ui.header {
   color: white;
 }
 
+/* line 40, ../../app/styles/main.scss */
 #projects-main {
   padding-top: 5rem;
   padding-bottom: 5rem;
 }
 
+/* line 45, ../../app/styles/main.scss */
 #projects-discover .list.list-categories > .item {
   cursor: pointer;
 }
 
+/* line 49, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects {
   min-width: 80%;
 }
 
+/* line 53, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project {
   text-align: left;
 }
 
+/* line 57, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project .content.about {
   width: 25%;
 }
 
+/* line 61, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project .content.contributors {
   margin-left: 2rem;
 }
 
+/* line 65, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project .content.contributors img.profile {
   width: 40px;
   height: 40px;
@@ -69,11 +68,13 @@ header .ui.header {
   padding: .3rem;
 }
 
+/* line 72, ../../app/styles/main.scss */
 #project .readme {
   background-color: #f5f5f5;
   padding: 3rem;
 }
 
+/* line 77, ../../app/styles/main.scss */
 #project .ui.list.contributors .item.contributor img.profile {
   width: 40px;
   height: 40px;

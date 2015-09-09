@@ -1,172 +1,186 @@
-<section id="project" class="ui padded centered grid">
-  <div class="ten wide column">
-    <h1 class="ui dividing header">{{ project.get('title') }}<a class="ui label" ng-repeat="cat in project.get('categoriesToString')">{{ cat }}</a></h1>
-    <p>{{ project.get('desc') }}</p>
-    <h1 class="ui dividing header">README.md</h1>
-    <div class="readme" btf-markdown="project.readme"></div>
-    <h1 class="ui dividing header">업데이트</h1>
-    <div class="ui one cards">
-      <div class="card" ng-repeat="u in updates">
-        <div class="content">
-          <i class="right floated user icon"></i>
-          <div class="right floated">{{ u.get('user').get('nick') }}</div>
-          <div class="header">{{ u.get('title') }}</div>
-          <div class="meta"><span class="date">{{ u.convertedCreatedAt }}</span></div>
-          <div class="description">
-            <p>{{ u.get('content') }}</p>
-          </div>
-        </div>
-        <div class="extra content">
-          <span class="left floated like">
-            <i class="like icon"></i>
-            Like
-          </span>
-          <span class="right floated star">
-            <i class="star icon"></i>
-            Favorite
-          </span>
+<section id="project" class="ui padded centered grid stackable">
+  <div class="fourteen wide column row">
+    <div class="eleven wide column">
+      <h1 class="ui dividing header">
+        {{ project.get('title') }}
+        <a class="ui red label" ng-repeat="cat in project.get('categoriesToString')">{{ cat }}</a>
+      </h1>
+      <p>{{ project.get('desc') }}</p>
+      <h3 class="ui dividing header">진행도</h3>
+      <div data-percent="{{ project.get('progress') }}" class="ui indicating progress active">
+        <div style="transition-duration: 300ms; width: {{ project.get('progress') }}%;" class="bar">
+          <div class="progress">{{ project.get('progress') }}%</div>
         </div>
       </div>
     </div>
+    <div class="five wide column">
+      <div class="row managing">
+        <div class="row" ng-if="isAdmin">
+          <div class="ui basic button" ng-click="openModal('update')" ng-show="isAdmin">업데이트</div>
+        </div>
+        <div class="row" ng-if="!isAdmin">
+          <div class="ui basic button" ng-click="addContributor(project.id)" ng-show="!isContributor">프로젝트 참여하기</div>
+        </div>
+      </div>
+      <h3 class="ui dividing header">기여자</h3>
+      <div class="ui tiny horizontal list contributors">
+        <div class="item contributor" ng-repeat="c in project.contributors">
+          <div class="ui avatar image">
+            <img src="{{ c.get('profile') }}" alt="{{ c.get('nick') }}" title="{{ c.get('nick') }}" class="profile">
+          </div>
+          <div class="content">
+            <a class="header">{{ contributor.get('nick') }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--
+    <div class="three wide column">
+
+    </div>
+    -->
   </div>
-  <div class="four wide column">
-    <div class="row managing">
-      <!-- <h3 class="ui dividing header">관리도구</h3> -->
-      <div class="row" ng-if="isAdmin">
-        <!-- <div class="ui basic button" ng-click="editProject()">프로젝트 수정하기</div> -->
-        <div class="ui basic button" ng-click="openModal('update')" ng-show="isAdmin">업데이트</div>
-      </div>
-      <div class="row" ng-if="!isAdmin">
-        <div class="ui basic button" ng-click="addContributor(project.id)" ng-show="!isContributor">프로젝트 참여하기</div>
+  <div class="fourteen wide column row">
+    <div class="eleven wide column">
+      <h1 class="ui dividing header">README.md</h1>
+      <div class="readme" btf-markdown="project.readme"></div>
+      <h1 class="ui dividing header">업데이트</h1>
+      <div class="ui one cards">
+        <div class="card" ng-repeat="u in updates">
+          <div class="content">
+            <i class="right floated user icon"></i>
+            <div class="right floated">{{ u.get('user').get('nick') }}</div>
+            <div class="header">{{ u.get('title') }}</div>
+            <div class="meta"><span class="date">{{ u.convertedCreatedAt }}</span></div>
+            <div class="description">
+              <p>{{ u.get('content') }}</p>
+            </div>
+          </div>
+          <div class="extra content">
+            <span class="left floated like">
+              <i class="like icon"></i>
+              Like
+            </span>
+            <span class="right floated star">
+              <i class="star icon"></i>
+              Favorite
+            </span>
+          </div>
+        </div>
       </div>
     </div>
-    <h3 class="ui dividing header">진행도</h3>
-    <div data-percent="{{ project.get('progress') }}" class="ui indicating progress active">
-      <div style="transition-duration: 300ms; width: {{ project.get('progress') }}%;" class="bar">
-        <div class="progress">{{ project.get('progress') }}%</div>
-      </div>
-    </div>
-    <h3 class="ui dividing header">기여자</h3>
-    <div class="ui tiny horizontal list contributors">
-      <div class="item contributor" ng-repeat="c in project.contributors">
-        <div class="ui avatar image">
-          <img src="{{ c.get('profile') }}" alt="{{ c.get('nick') }}" title="{{ c.get('nick') }}" class="profile">
-        </div>
-        <div class="content">
-          <a class="header">{{ contributor.get('nick') }}</a>
-        </div>
-      </div>
-    </div>
-    <h3 class="ui dividing header">참여 기록</h3>
-    <div class="ui feed">
-      <div class="event" ng-repeat="event in project.events">
-        <div class="label">
-          <img src="{{ event.actor.avatar_url }}">
-        </div>
-        <div class="content" ng-if="event.type == 'IssueCommentEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 <a href="{{ event.payload.issue.html_url }}">이슈 #{{ event.payload.issue.number }}, '{{ event.payload.issue.title }}'</a>에 댓글을 달았습니다.
-            <div class="date">
-              {{ event.created_at }}
+    <div class="five wide column">
+      <h3 class="ui dividing header">참여 기록</h3>
+      <div class="ui feed">
+        <div class="event" ng-repeat="event in project.events">
+          <div class="label">
+            <img src="{{ event.actor.avatar_url }}">
+          </div>
+          <div class="content" ng-if="event.type == 'IssueCommentEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 <a href="{{ event.payload.issue.html_url }}">이슈 #{{ event.payload.issue.number }}, '{{ event.payload.issue.title }}'</a>에 댓글을 달았습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
+            </div>
+            <!-- <div class="meta">
+              <a class="like">
+                <i class="like icon"></i> 4 Likes
+              </a>
+            </div> -->
+          </div>
+          <div class="content" ng-if="event.type == 'IssuesEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 <a href="{{ event.payload.issue.html_url }}">이슈 #{{ event.payload.issue.number }}, '{{ event.payload.issue.title }}'</a>를 생성하였습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
+            </div>
+            <div class="meta">
+              <a class="ui label" ng-repeat="label in event.payload.issue.labels" style="background-color: #{{ label.color }} !important; color: white;">
+                {{ label.name }}
+              </a>
             </div>
           </div>
-          <!-- <div class="meta">
-            <a class="like">
-              <i class="like icon"></i> 4 Likes
-            </a>
-          </div> -->
-        </div>
-        <div class="content" ng-if="event.type == 'IssuesEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 <a href="{{ event.payload.issue.html_url }}">이슈 #{{ event.payload.issue.number }}, '{{ event.payload.issue.title }}'</a>를 생성하였습니다.
-            <div class="date">
-              {{ event.created_at }}
+          <div class="content" ng-if="event.type == 'PushEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 Push 하였습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
+            </div>
+            <div class="meta">
+              <a class="ui label">
+                {{ event.payload.ref.split('/').pop() }}
+              </a>
             </div>
           </div>
-          <div class="meta">
-            <a class="ui label" ng-repeat="label in event.payload.issue.labels" style="background-color: #{{ label.color }} !important; color: white;">
-              {{ label.name }}
-            </a>
-          </div>
-        </div>
-        <div class="content" ng-if="event.type == 'PushEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 Push 하였습니다.
-            <div class="date">
-              {{ event.created_at }}
+          <div class="content" ng-if="event.type == 'CreateEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 새 {{ event.payload.ref_type }}을 생성하였습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
+            </div>
+            <div class="meta">
+              <a class="ui label">
+                {{ event.payload.ref }}
+              </a>
             </div>
           </div>
-          <div class="meta">
-            <a class="ui label">
-              {{ event.payload.ref.split('/').pop() }}
-            </a>
-          </div>
-        </div>
-        <div class="content" ng-if="event.type == 'CreateEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 새 {{ event.payload.ref_type }}을 생성하였습니다.
-            <div class="date">
-              {{ event.created_at }}
+          <div class="content" ng-if="event.type == 'DeleteEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 "{{ event.payload.ref }}" {{ event.payload.ref_type }}을(를) 삭제하였습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
+            </div>
+            <div class="meta">
+              <a class="ui label" ng-repeat="label in event.payload.issue.labels" style="background-color: #{{ label.color }} !important; color: white;">
+                {{ label.name }}
+              </a>
             </div>
           </div>
-          <div class="meta">
-            <a class="ui label">
-              {{ event.payload.ref }}
-            </a>
-          </div>
-        </div>
-        <div class="content" ng-if="event.type == 'DeleteEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 "{{ event.payload.ref }}" {{ event.payload.ref_type }}을(를) 삭제하였습니다.
-            <div class="date">
-              {{ event.created_at }}
+          <div class="content" ng-if="event.type == 'ForkEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 <a href="{{ event.payload.forkee.html_url }}">포크</a>하였습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
             </div>
+            <!-- <div class="meta">
+              <a class="ui label">
+                {{ event.payload.ref }}
+              </a>
+            </div> -->
           </div>
-          <div class="meta">
-            <a class="ui label" ng-repeat="label in event.payload.issue.labels" style="background-color: #{{ label.color }} !important; color: white;">
-              {{ label.name }}
-            </a>
-          </div>
-        </div>
-        <div class="content" ng-if="event.type == 'ForkEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 <a href="{{ event.payload.forkee.html_url }}">포크</a>하였습니다.
-            <div class="date">
-              {{ event.created_at }}
+          <div class="content" ng-if="event.type == 'WatchEvent'">
+            <div class="summary">
+              <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
+                {{ event.actor.login }}
+              </a>님이 'Watch'하였습니다.
+              <div class="date">
+                {{ event.created_at }}
+              </div>
             </div>
+            <!-- <div class="meta">
+              <a class="ui label">
+                {{ event.payload.ref }}
+              </a>
+            </div> -->
           </div>
-          <!-- <div class="meta">
-            <a class="ui label">
-              {{ event.payload.ref }}
-            </a>
-          </div> -->
-        </div>
-        <div class="content" ng-if="event.type == 'WatchEvent'">
-          <div class="summary">
-            <a href="https://github.com/{{ event.actor.login }}" target="_blank" class="user">
-              {{ event.actor.login }}
-            </a>님이 'Watch'하였습니다.
-            <div class="date">
-              {{ event.created_at }}
-            </div>
-          </div>
-          <!-- <div class="meta">
-            <a class="ui label">
-              {{ event.payload.ref }}
-            </a>
-          </div> -->
         </div>
       </div>
     </div>
