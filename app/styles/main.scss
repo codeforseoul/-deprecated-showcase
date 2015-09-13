@@ -1,3 +1,5 @@
+$information-phone: "only screen and (max-width : 768px)";
+
 body {
   display: -webkit-box;
   display: -webkit-flex;
@@ -37,6 +39,13 @@ header .ui.header {
   color: white;
 }
 
+#body {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+}
+
 #projects-main {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -69,6 +78,16 @@ header .ui.header {
   padding: .3rem;
 }
 
+@media #{$information-phone} {
+  #projects-discover .ui.items.projects .project .content.about {
+    width: 100%;
+  }
+
+  #projects-discover .ui.items.projects .project .content.contributors {
+    margin-left: 0rem;
+  }
+}
+
 #project .readme {
   background-color: #f5f5f5;
   padding: 3rem;
@@ -78,4 +97,14 @@ header .ui.header {
   width: 40px;
   height: 40px;
   border-radius: 20px;
+}
+
+footer > section.ui.page.grid.segment {
+  margin-bottom: 0px;
+}
+
+@media #{$information-phone} {
+  footer > section.ui.page.grid.segment .ui.stackable.grid {
+    margin: 0px 2rem !important;
+  }
 }

@@ -1,4 +1,4 @@
-/* line 1, ../../app/styles/main.scss */
+/* line 3, ../../app/styles/main.scss */
 body {
   display: -webkit-flex;
   display: flex;
@@ -6,12 +6,12 @@ body {
   flex-direction: column;
 }
 
-/* line 13, ../../app/styles/main.scss */
+/* line 15, ../../app/styles/main.scss */
 .cards > .card img {
   width: 100%;
 }
 
-/* line 17, ../../app/styles/main.scss */
+/* line 19, ../../app/styles/main.scss */
 header {
   background: url(/images/header.jpg) no-repeat !important;
   background-size: cover !important;
@@ -24,43 +24,49 @@ header {
   justify-content: center;
 }
 
-/* line 36, ../../app/styles/main.scss */
+/* line 38, ../../app/styles/main.scss */
 header .ui.header {
   color: white;
 }
 
-/* line 40, ../../app/styles/main.scss */
+/* line 42, ../../app/styles/main.scss */
+#body {
+  -webkit-flex: auto;
+  flex: auto;
+}
+
+/* line 49, ../../app/styles/main.scss */
 #projects-main {
   padding-top: 5rem;
   padding-bottom: 5rem;
 }
 
-/* line 45, ../../app/styles/main.scss */
+/* line 54, ../../app/styles/main.scss */
 #projects-discover .list.list-categories > .item {
   cursor: pointer;
 }
 
-/* line 49, ../../app/styles/main.scss */
+/* line 58, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects {
   min-width: 80%;
 }
 
-/* line 53, ../../app/styles/main.scss */
+/* line 62, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project {
   text-align: left;
 }
 
-/* line 57, ../../app/styles/main.scss */
+/* line 66, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project .content.about {
   width: 25%;
 }
 
-/* line 61, ../../app/styles/main.scss */
+/* line 70, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project .content.contributors {
   margin-left: 2rem;
 }
 
-/* line 65, ../../app/styles/main.scss */
+/* line 74, ../../app/styles/main.scss */
 #projects-discover .ui.items.projects .project .content.contributors img.profile {
   width: 40px;
   height: 40px;
@@ -68,15 +74,38 @@ header .ui.header {
   padding: .3rem;
 }
 
-/* line 72, ../../app/styles/main.scss */
+@media only screen and (max-width: 768px) {
+  /* line 82, ../../app/styles/main.scss */
+  #projects-discover .ui.items.projects .project .content.about {
+    width: 100%;
+  }
+
+  /* line 86, ../../app/styles/main.scss */
+  #projects-discover .ui.items.projects .project .content.contributors {
+    margin-left: 0rem;
+  }
+}
+/* line 91, ../../app/styles/main.scss */
 #project .readme {
   background-color: #f5f5f5;
   padding: 3rem;
 }
 
-/* line 77, ../../app/styles/main.scss */
+/* line 96, ../../app/styles/main.scss */
 #project .ui.list.contributors .item.contributor img.profile {
   width: 40px;
   height: 40px;
   border-radius: 20px;
+}
+
+/* line 102, ../../app/styles/main.scss */
+footer > section.ui.page.grid.segment {
+  margin-bottom: 0px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 107, ../../app/styles/main.scss */
+  footer > section.ui.page.grid.segment .ui.stackable.grid {
+    margin: 0px 2rem !important;
+  }
 }
